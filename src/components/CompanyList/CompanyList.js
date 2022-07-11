@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import CompanyCard from "../CompanyCard/CompanyCard";
+import Card from "../Card/Card";
 import JoblyApi from "../../api";
 
 const CompanyList = () => {
@@ -23,18 +23,17 @@ const CompanyList = () => {
   return (
     <div className="CompanyList">
       <form onSubmit={(e) => e.preventDefault()}>
-        <label htmlFor="search">Search for Companies</label>
+        <label htmlFor="search-companies">Search for Companies</label>
         <input
           type="search"
-          id="search"
-          name="search"
+          id="search-companies"
           value={formData.searchValue || ""}
           onChange={handleSearch}
         />
       </form>
       {companies
         ? companies.map((company) => (
-            <CompanyCard company={company} key={company.handle} />
+            <Card data={company} type="company" key={company.handle} />
           ))
         : null}
     </div>
