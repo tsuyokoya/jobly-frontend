@@ -48,6 +48,14 @@ class JoblyApi {
     const res = await this.request(`companies`, query);
     return res.companies;
   }
+
+  /** Get all jobs or filtered jobs based on input. */
+
+  static async getFilteredJobs(searchString) {
+    const query = searchString !== "" ? { title: searchString } : null;
+    const res = await this.request(`jobs`, query);
+    return res.jobs;
+  }
 }
 
 // for now, put token ("testuser" / "password" on class)
