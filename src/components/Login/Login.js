@@ -10,10 +10,8 @@ const Login = ({ login }) => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted");
     const res = await login(formData);
     if (res.success) {
-      console.log(res);
       navigate("/", { replace: true });
     }
   };
