@@ -1,14 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Card = ({ data, type }) => {
   return type === "company" ? (
-    <a href={`/companies/${data.handle}`} className="Card">
+    <Link to={`/companies/${data.handle}`} className="Card">
       <div>
         <h3>{data.name}</h3>
         <p>Number of Employees: {data.numEmployees}</p>
         <p>{data.description}</p>
       </div>
-    </a>
+    </Link>
   ) : (
     <div className="Card">
       <h3>{data.title}</h3>
