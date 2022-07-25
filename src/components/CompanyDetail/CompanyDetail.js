@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import JoblyApi from "../../api";
 import Card from "../Card/Card";
 
-const CompanyDetail = () => {
+const CompanyDetail = ({ currentUser }) => {
   const [companyJobs, setCompanyJobs] = useState(null);
   const { handle } = useParams();
   useEffect(() => {
@@ -17,7 +17,14 @@ const CompanyDetail = () => {
   return (
     <div className="CompanyDetail">
       {companyJobs
-        ? companyJobs.map((job) => <Card data={job} type="job" key={job.id} />)
+        ? companyJobs.map((job) => (
+            <Card
+              data={job}
+              type="job"
+              currentUser={currentUser}
+              key={job.id}
+            />
+          ))
         : null}
     </div>
   );
