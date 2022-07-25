@@ -63,6 +63,49 @@ class JoblyApi {
     const res = await this.request(`auth/token`, data, "post");
     return res;
   }
+
+  /** Register user */
+
+  static async register(data) {
+    const res = await this.request(`auth/register`, data, "post");
+    return res;
+  }
+
+  /** Get user data */
+
+  static async getUserData(username) {
+    const res = await this.request(`users/${username}`);
+    return res;
+  }
+
+  /** Update user data */
+
+  static async updateUserData(data, username) {
+    const res = await this.request(`users/${username}`, data, "patch");
+    return res;
+  }
+
+  /** Applies to job */
+
+  static async applyToJob(id, username) {
+    const data = {
+      id,
+      username,
+    };
+    const res = await this.request(
+      `users/${username}/jobs/${id}`,
+      data,
+      "post"
+    );
+    return res;
+  }
+
+  /** Check if job already applied to */
+
+  static async hasApplied(username) {
+    const res = await this.request(`users/${username}`);
+    return res.user;
+  }
 }
 JoblyApi.token = "";
 
