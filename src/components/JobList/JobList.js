@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Card from "../Card/Card";
 import JoblyApi from "../../api";
 
-const JobList = () => {
+const JobList = ({ currentUser }) => {
   const [jobs, setJobs] = useState([]);
   const [formData, setFormData] = useState({ searchValue: "" });
 
@@ -16,10 +16,13 @@ const JobList = () => {
     const getFilteredJobs = async () => {
       const res = await JoblyApi.getFilteredJobs(formData.searchValue);
       setJobs(res);
-      console.log(res);
     };
     getFilteredJobs();
   }, [formData]);
+
+  const handleApply = async (e, id) => {
+    return await JoblyApi.applyToJob(id, currentUser.username);
+  };
 
   return (
     <div className="JobList">
@@ -33,7 +36,15 @@ const JobList = () => {
         />
       </form>
       {jobs
-        ? jobs.map((job) => <Card data={job} type="job" key={job.id} />)
+        ? jobs.map((job) => (
+            <Card
+              data={job}
+              handleApply={handleApply}
+              currentUser={currentUser}
+              type="job"
+              key={job.id}
+            />
+          ))
         : null}
     </div>
   );
