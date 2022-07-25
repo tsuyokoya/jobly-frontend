@@ -1,9 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import UserContext from "../UserContext";
 
-const ProfileForm = ({ updateUserData }) => {
-  const { currentUser } = useContext(UserContext);
+const ProfileForm = ({ updateUserData, currentUser }) => {
   const INITIAL_STATE = {
     firstName: currentUser.firstName,
     lastName: currentUser.lastName,
