@@ -1,0 +1,10 @@
+.Card-apply {
+  background-color: red;
+  color: white;
+  font-size: 1em;
+}
+
+.applied > button {
+  opacity: 50%;
+  pointer-events: none;
+}
