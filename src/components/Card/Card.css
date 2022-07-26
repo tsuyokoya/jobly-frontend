@@ -1,10 +1,4 @@
-.Card-apply {
-  background-color: red;
-  color: white;
-  font-size: 1em;
-}
-
-.applied > button {
+.applied > .Card-btn-wrapper > button {
   opacity: 50%;
   pointer-events: none;
 }
