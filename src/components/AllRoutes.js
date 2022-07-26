@@ -32,10 +32,13 @@ const AllRoutes = () => {
   }, [token]);
 
   const login = async (data) => {
-    const res = await JoblyApi.login(data);
-    console.log("RES", res);
-    setToken(res.token);
-    return { success: true };
+    try {
+      const res = await JoblyApi.login(data);
+      setToken(res.token);
+      return { success: true };
+    } catch {
+      alert("Invalid username/password");
+    }
   };
 
   const logout = async (data) => {
@@ -67,6 +70,7 @@ const AllRoutes = () => {
       <Navbar logout={logout} token={token} />
       <Routes>
         <Route path="/" element={<Homepage user={currentUser} />}></Route>
+        <Route path="/logout" element={<Navigate to="/" replace />}></Route>
         <Route path="/login" element={<Login login={login} />}></Route>
         <Route path="/signup" element={<Signup register={register} />}></Route>
         <Route
