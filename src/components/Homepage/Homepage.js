@@ -1,16 +1,34 @@
 import React from "react";
+import ReactRotatingText from "react-rotating-text";
+import "./Homepage.css";
+
+const rotatingTextItems = [
+  "Accountant",
+  "Manager",
+  "Executive",
+  "Engineer",
+  "Consultant",
+  "Operator",
+  "Adviser",
+];
 
 const Homepage = ({ user }) => {
   const welcomeMsg = user ? (
-    <p>Welcome back, {user.firstName}</p>
+    <p className="display-6">Welcome back, {user.firstName}</p>
   ) : (
-    <p>Log In or Sign Up to Use!</p>
+    <p className="display-6">Log In or Sign Up to use!</p>
   );
   return (
-    <div>
-      <h1>Jobly</h1>
-      <p>All the fake jobs in one, convenient place.</p>
+    <div className="d-flex flex-column align-items-center justify-content-center vh-100">
+      <h1 className="display-1">Jobly</h1>
+
+      <p className="display-6">All the fake jobs in one, convenient place.</p>
       {welcomeMsg}
+      <ReactRotatingText
+        className="display-6"
+        items={rotatingTextItems}
+        color="blue"
+      />
     </div>
   );
 };
