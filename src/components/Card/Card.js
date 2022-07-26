@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import JoblyApi from "../../api";
-import { Button } from "reactstrap";
+import {
+  Button,
+  Card as ReactstrapCard,
+  CardBody,
+  CardTitle,
+  CardText,
+} from "reactstrap";
 import "./Card.css";
 
 const Card = ({ data, type, handleApply, currentUser }) => {
@@ -20,42 +26,64 @@ const Card = ({ data, type, handleApply, currentUser }) => {
   });
 
   const companyCard = (
-    <Link to={`/companies/${data.handle}`} className="Card">
-      <div>
-        <h3>{data.name}</h3>
-        <p>Number of Employees: {data.numEmployees}</p>
-        <p>{data.description}</p>
-      </div>
-    </Link>
+    <ReactstrapCard
+      className="Card d-flex flex-column w-50 m-2 shadow"
+      color="primary"
+      outline
+    >
+      <Link
+        to={`/companies/${data.handle}`}
+        className="Card text-decoration-none text-dark"
+      >
+        <CardBody>
+          <CardTitle tag="h5" className="h3">
+            {data.name}
+          </CardTitle>
+          <CardText>Number of Employees: {data.numEmployees}</CardText>
+          <CardText>{data.description}</CardText>
+        </CardBody>
+      </Link>
+    </ReactstrapCard>
   );
 
   const handleClick = async (e) => {
     e.persist();
-    const jobId = e.target.parentNode.dataset.id;
+    const jobId = e.target.parentNode.parentNode.dataset.id;
     const res = await handleApply(e, jobId);
     if (res.applied) {
-      e.target.parentNode.classList.add("applied");
+      e.target.parentNode.parentNode.classList.add("applied");
       e.target.textContent = "Applied!";
     }
   };
 
   const jobCard = (
-    <div
-      className={"Card " + (alreadyApplied === true ? "applied" : "")}
+    <ReactstrapCard
+      className={
+        "Card d-flex flex-column w-50 m-2 shadow " +
+        (alreadyApplied === true ? "applied" : "")
+      }
+      color="primary"
+      outline
       data-id={data.id}
     >
-      <h3>{data.title}</h3>
-      <p>Company: {data.companyName}</p>
-      <p>Salary: {data.salary}</p>
-      <p>Equity: {data.equity}</p>
-      <Button
-        color="danger"
-        className="Card-apply"
-        onClick={(e) => handleClick(e)}
-      >
-        {alreadyApplied === true ? "Applied!" : "Apply"}
-      </Button>
-    </div>
+      <CardBody>
+        <CardTitle tag="h5" className="h3">
+          {data.title}
+        </CardTitle>
+        <CardText>Company: {data.companyName}</CardText>
+        <CardText>Salary: {data.salary || "N/A"}</CardText>
+        <CardText>Equity: {data.equity || "N/A"}</CardText>
+      </CardBody>
+      <div className="Card-btn-wrapper w-100 d-flex flex-row justify-content-end">
+        <Button
+          className="w-25 m-2"
+          color="danger"
+          onClick={(e) => handleClick(e)}
+        >
+          {alreadyApplied === true ? "Applied!" : "Apply"}
+        </Button>
+      </div>
+    </ReactstrapCard>
   );
 
   return type === "company" ? companyCard : jobCard;
