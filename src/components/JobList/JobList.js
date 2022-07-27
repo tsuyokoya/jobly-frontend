@@ -2,22 +2,35 @@ import React, { useState, useEffect } from "react";
 import Card from "../Card/Card";
 import JoblyApi from "../../api";
 import { Form, Input, Label } from "reactstrap";
+import debounce from "lodash.debounce";
 
 const JobList = ({ currentUser }) => {
+  /*
+  State:
+  - jobs: array of job data fetched from database
+  - formData: string input; value is used to call JoblyApi to get filtered job list
+  - formInputValue: same value as formData; used by input to display typed text
+  - isLoading: boolean value to indicate whether to display Loading text or not
+  */
   const [jobs, setJobs] = useState([]);
   const [formData, setFormData] = useState({ searchValue: "" });
+  const [formInputValue, setFormInputValue] = useState({ searchValue: "" });
   const [isLoading, setIsLoading] = useState(true);
 
   const handleSearch = (e) => {
     const { value } = e.target;
-    setFormData({ searchValue: value });
+    setFormInputValue({ searchValue: value });
+
+    debounce(() => {
+      setFormData({ searchValue: value });
+    }, 1000)();
   };
 
   // fetch list of all jobs or filtered jobs based on input
   useEffect(() => {
     const getFilteredJobs = async () => {
       const res = await JoblyApi.getFilteredJobs(formData.searchValue);
-      setJobs(res);
+      setJobs(res.slice(0, 10));
     };
     getFilteredJobs().then(() => {
       setIsLoading(false);
@@ -49,7 +62,7 @@ const JobList = ({ currentUser }) => {
         <Input
           type="search"
           id="search-jobs"
-          value={formData.searchValue || ""}
+          value={formInputValue.searchValue}
           onChange={handleSearch}
           placeholder="Search for a job"
           bsSize="lg"
