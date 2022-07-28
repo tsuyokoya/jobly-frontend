@@ -5,6 +5,7 @@ import "./Navbar.css";
 
 const Navbar = ({ logout, token }) => {
   return token === null ? (
+    // Navbar view if not logged in
     <ReactstrapNavbar className="fixed-top" color="light">
       <Nav>
         <NavItem className="p-1">
@@ -31,6 +32,7 @@ const Navbar = ({ logout, token }) => {
       </Nav>
     </ReactstrapNavbar>
   ) : (
+    // Navbar view if logged in
     <ReactstrapNavbar className="fixed-top" color="light">
       <Nav>
         <NavItem className="p-1">
