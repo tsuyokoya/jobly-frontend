@@ -3,6 +3,7 @@ import Card from "../Card/Card";
 import JoblyApi from "../../api";
 import { Form, Input, Label } from "reactstrap";
 import debounce from "lodash.debounce";
+import Paginate from "../Paginate";
 
 const JobList = ({ currentUser }) => {
   /*
@@ -16,6 +17,8 @@ const JobList = ({ currentUser }) => {
   const [formData, setFormData] = useState({ searchValue: "" });
   const [formInputValue, setFormInputValue] = useState({ searchValue: "" });
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [jobsPerPage] = useState(20);
 
   const handleSearch = (e) => {
     const { value } = e.target;
@@ -23,6 +26,7 @@ const JobList = ({ currentUser }) => {
 
     debounce(() => {
       setFormData({ searchValue: value });
+      setCurrentPage(1);
     }, 1000)();
   };
 
@@ -30,7 +34,7 @@ const JobList = ({ currentUser }) => {
   useEffect(() => {
     const getFilteredJobs = async () => {
       const res = await JoblyApi.getFilteredJobs(formData.searchValue);
-      setJobs(res.slice(0, 10));
+      setJobs(res);
     };
     getFilteredJobs().then(() => {
       setIsLoading(false);
@@ -39,6 +43,16 @@ const JobList = ({ currentUser }) => {
 
   const handleApply = async (e, id) => {
     return await JoblyApi.applyToJob(id, currentUser.username);
+  };
+
+  //Get current posts
+  const indexOfLastJob = currentPage * jobsPerPage;
+  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+
+  // Change page
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
   if (isLoading) {
@@ -52,6 +66,7 @@ const JobList = ({ currentUser }) => {
   return (
     <div className="JobList d-flex flex-column align-items-center">
       <Form
+        id="form"
         className="d-flex flex-row w-50"
         style={{ marginTop: "100px" }}
         onSubmit={(e) => e.preventDefault()}
@@ -68,7 +83,7 @@ const JobList = ({ currentUser }) => {
           bsSize="lg"
         />
       </Form>
-      {jobs.map((job) => {
+      {currentJobs.map((job) => {
         return (
           <Card
             data={job}
@@ -79,6 +94,12 @@ const JobList = ({ currentUser }) => {
           />
         );
       })}
+      <Paginate
+        itemsPerPage={jobsPerPage}
+        totalItems={jobs.length}
+        paginate={paginate}
+        currentPage={currentPage}
+      />
     </div>
   );
 };
