@@ -2,7 +2,7 @@
 
 The frontend portion of the fullstack app Jobly - the #1 website to find and apply to fake jobs! Make an account, browse for companies, search through job listings, and apply to jobs.
 
-The fullstack app is deployed here:
+The fullstack app is deployed here: https://tk-jobly.surge.sh/
 
 Frontend: React, Reactstrap<br />
 Backend: Node, Express, PostgreSQL
