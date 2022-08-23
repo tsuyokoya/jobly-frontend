@@ -1,5 +1,8 @@
 import React from "react";
 import ReactRotatingText from "react-rotating-text";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBriefcase } from "@fortawesome/free-solid-svg-icons";
+
 import "./Homepage.css";
 
 const rotatingTextItems = [
@@ -20,7 +23,10 @@ const Homepage = ({ user }) => {
   );
   return (
     <div className="d-flex flex-column align-items-center justify-content-center vh-100">
-      <h1 className="display-1">Jobly</h1>
+      <h1 className="display-1">
+        <FontAwesomeIcon icon={faBriefcase} />
+        Jobly
+      </h1>
 
       <p className="display-6">All the fake jobs in one, convenient place.</p>
       {welcomeMsg}

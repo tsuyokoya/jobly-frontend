@@ -1,6 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Navbar as ReactstrapNavbar, Nav, NavItem } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBriefcase } from "@fortawesome/free-solid-svg-icons";
+
 import "./Navbar.css";
 
 const Navbar = ({ logout, token }) => {
@@ -10,7 +13,7 @@ const Navbar = ({ logout, token }) => {
       <Nav>
         <NavItem className="p-1">
           <NavLink className="nav-link text-decoration-none text-dark" to="/">
-            Home
+            <FontAwesomeIcon icon={faBriefcase} /> Jobly
           </NavLink>
         </NavItem>
         <NavItem className="p-1">
@@ -37,7 +40,7 @@ const Navbar = ({ logout, token }) => {
       <Nav>
         <NavItem className="p-1">
           <NavLink className="nav-link text-decoration-none text-dark" to="/">
-            Home
+            <FontAwesomeIcon icon={faBriefcase} /> Jobly
           </NavLink>
         </NavItem>
         <NavItem className="p-1">
