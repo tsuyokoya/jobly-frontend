@@ -36,7 +36,7 @@ const ProfileForm = ({ updateUserData, currentUser }) => {
     >
       <FormGroup className="w-50">
         <Label htmlFor="username">Username</Label>
-        <p>{currentUser.username}</p>
+        <Input type="text" value={currentUser.username} disabled />
       </FormGroup>
       <FormGroup className="w-50">
         <Label htmlFor="firstName">First Name</Label>
